@@ -7,6 +7,8 @@
 " Changes:
 " - change `:set option` map prefix to `y` instead of `[`
 " - change `:set nooption` map prefix to 'd' instead of `]`
+" - add option map for fullscreen
+" - add option map for quickfix window
 " - remove <Plug>unimpairedPaste (clashes with set options)
 
 if exists("g:loaded_unimpaired") || &cp || v:version < 700
@@ -228,6 +230,7 @@ call s:option_map('u', 'cursorcolumn')
 nnoremap yod :diffthis<CR>
 nnoremap dod :diffoff<CR>
 nnoremap cod :<C-R>=&diff ? 'diffoff' : 'diffthis'<CR><CR>
+call s:option_map('f', 'fullscreen')
 call s:option_map('h', 'hlsearch')
 call s:option_map('i', 'ignorecase')
 call s:option_map('l', 'list')
@@ -235,6 +238,9 @@ call s:option_map('n', 'number')
 call s:option_map('r', 'relativenumber')
 call s:option_map('s', 'spell')
 call s:option_map('w', 'wrap')
+nnoremap yoq :copen<CR>
+nnoremap doq :cclose<CR>
+nnoremap coq :cwindow<CR>
 nnoremap yox :set cursorline cursorcolumn<CR>
 nnoremap dox :set nocursorline nocursorcolumn<CR>
 nnoremap cox :set <C-R>=&cursorline && &cursorcolumn ? 'nocursorline nocursorcolumn' : 'cursorline cursorcolumn'<CR><CR>
