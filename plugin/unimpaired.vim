@@ -1,7 +1,13 @@
 " unimpaired.vim - Pairs of handy bracket mappings
 " Maintainer:   Tim Pope <http://tpo.pe/>
-" Version:      1.2
+" Edited By:    Tim Steenvoorden
+" Version:      1.3
 " GetLatestVimScripts: 1590 1 :AutoInstall: unimpaired.vim
+"
+" Changes:
+" - change `:set option` map prefix to `y` instead of `[`
+" - change `:set nooption` map prefix to 'd' instead of `]`
+" - remove <Plug>unimpairedPaste (clashes with set options)
 
 if exists("g:loaded_unimpaired") || &cp || v:version < 700
   finish
@@ -209,18 +215,18 @@ function! s:toggle(op) abort
 endfunction
 
 function! s:option_map(letter, option) abort
-  exe 'nnoremap [o'.a:letter ':set '.a:option.'<C-R>=<SID>statusbump()<CR><CR>'
-  exe 'nnoremap ]o'.a:letter ':set no'.a:option.'<C-R>=<SID>statusbump()<CR><CR>'
+  exe 'nnoremap yo'.a:letter ':set '.a:option.'<C-R>=<SID>statusbump()<CR><CR>'
+  exe 'nnoremap do'.a:letter ':set no'.a:option.'<C-R>=<SID>statusbump()<CR><CR>'
   exe 'nnoremap co'.a:letter ':set <C-R>=<SID>toggle("'.a:option.'")<CR><CR>'
 endfunction
 
-nnoremap [ob :set background=light<CR>
-nnoremap ]ob :set background=dark<CR>
+nnoremap yob :set background=light<CR>
+nnoremap dob :set background=dark<CR>
 nnoremap cob :set background=<C-R>=&background == 'dark' ? 'light' : 'dark'<CR><CR>
 call s:option_map('c', 'cursorline')
 call s:option_map('u', 'cursorcolumn')
-nnoremap [od :diffthis<CR>
-nnoremap ]od :diffoff<CR>
+nnoremap yod :diffthis<CR>
+nnoremap dod :diffoff<CR>
 nnoremap cod :<C-R>=&diff ? 'diffoff' : 'diffthis'<CR><CR>
 call s:option_map('h', 'hlsearch')
 call s:option_map('i', 'ignorecase')
@@ -229,11 +235,11 @@ call s:option_map('n', 'number')
 call s:option_map('r', 'relativenumber')
 call s:option_map('s', 'spell')
 call s:option_map('w', 'wrap')
-nnoremap [ox :set cursorline cursorcolumn<CR>
-nnoremap ]ox :set nocursorline nocursorcolumn<CR>
+nnoremap yox :set cursorline cursorcolumn<CR>
+nnoremap dox :set nocursorline nocursorcolumn<CR>
 nnoremap cox :set <C-R>=&cursorline && &cursorcolumn ? 'nocursorline nocursorcolumn' : 'cursorline cursorcolumn'<CR><CR>
-nnoremap [ov :set virtualedit+=all<CR>
-nnoremap ]ov :set virtualedit-=all<CR>
+nnoremap yov :set virtualedit+=all<CR>
+nnoremap dov :set virtualedit-=all<CR>
 nnoremap cov :set <C-R>=(&virtualedit =~# "all") ? 'virtualedit-=all' : 'virtualedit+=all'<CR><CR>
 
 function! s:setup_paste() abort
@@ -245,8 +251,8 @@ endfunction
 
 nnoremap <silent> <Plug>unimpairedPaste :call <SID>setup_paste()<CR>
 
-nnoremap <silent> yo  :call <SID>setup_paste()<CR>o
-nnoremap <silent> yO  :call <SID>setup_paste()<CR>O
+" nnoremap <silent> yo  :call <SID>setup_paste()<CR>o
+" nnoremap <silent> yO  :call <SID>setup_paste()<CR>O
 
 augroup unimpaired_paste
   autocmd!
